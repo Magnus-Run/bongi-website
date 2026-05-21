@@ -489,14 +489,14 @@ img { display: block; max-width: 100%; height: auto; }
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 900px) {
   .hero {
-    flex-direction: column-reverse;
+    flex-direction: column;
     min-height: auto;
     padding-top: 7rem;
     gap: 3rem;
     text-align: left;
   }
 
-  .hero__photo-wrap { width: 260px; }
+  .hero__photo-wrap { width: 160px; }
 
   .problem__grid { grid-template-columns: 1fr; }
 
