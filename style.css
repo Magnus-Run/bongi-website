@@ -489,14 +489,15 @@ img { display: block; max-width: 100%; height: auto; }
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 900px) {
   .hero {
-    flex-direction: column;
+    flex-direction: row;
     min-height: auto;
     padding-top: 7rem;
-    gap: 3rem;
+    gap: 2rem;
+    align-items: center;
     text-align: left;
   }
 
-  .hero__photo-wrap { width: 160px; }
+  .hero__photo-wrap { width: 140px; }
 
   .problem__grid { grid-template-columns: 1fr; }
 
@@ -510,6 +511,7 @@ img { display: block; max-width: 100%; height: auto; }
 @media (max-width: 540px) {
   .nav { padding: 1rem 1.25rem; }
   .strip__inner { justify-content: flex-start; }
-  .hero { padding: 6rem 1.25rem 3rem; }
+  .hero { padding: 6rem 1.25rem 3rem; gap: 1.25rem; }
+  .hero__photo-wrap { width: 110px; }
   .footer__inner { flex-direction: column; text-align: center; }
 }
