@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/north-invent/login", "destination": "/north-invent/login.html" }
+  ]
+}
