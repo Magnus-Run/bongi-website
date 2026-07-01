@@ -1,34 +1,20 @@
-import { NextResponse } from 'next/server';
+export const config = { matcher: ['/north-invent/:path*'] }
 
-export const config = {
-  matcher: ['/north-invent/:path*'],
-};
+export default function middleware(request) {
+  const url = new URL(request.url)
+  const path = url.pathname
 
-export function middleware(request) {
-  const { pathname } = request.nextUrl;
-
-  // Allow the login page and the login API through without auth check
-  if (
-    pathname === '/north-invent/login' ||
-    pathname.startsWith('/api/login')
-  ) {
-    return NextResponse.next();
+  // Always allow the login page and login API through
+  if (path === '/north-invent/login' || path.startsWith('/api/login')) {
+    return
   }
 
-  const cookie = request.cookies.get('ni_auth');
-  const password = process.env.NI_PASSWORD;
+  const cookie = request.headers.get('cookie') || ''
+  const niAuth = cookie.split(';').find(c => c.trim().startsWith('ni_auth='))
 
-  if (!password) {
-    // NI_PASSWORD not set — block access until the env var is configured
-    return new NextResponse('Service unavailable: auth not configured.', {
-      status: 503,
-    });
+  // The cookie is only ever set by api/login.js after verifying NI_PASSWORD
+  // server-side, so its presence is sufficient to grant access.
+  if (!niAuth) {
+    return Response.redirect(new URL('/north-invent/login', request.url), 302)
   }
-
-  if (!cookie || cookie.value !== password) {
-    const loginUrl = new URL('/north-invent/login', request.url);
-    return NextResponse.redirect(loginUrl);
-  }
-
-  return NextResponse.next();
 }
